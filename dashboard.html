@@ -13,10 +13,7 @@
   <!-- <script src="js/controllers.js"></script> -->
   <!-- <script src="js/services.js"></script> -->
   <script>
-    angular.module('dashApp',[]).controller('dashController',function($scope){
-        $scope.username = localStorage.getItem('loggedInUser');
-
-    });
+    
   </script>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -124,6 +121,10 @@
 
   <script>
     //$('#navbar').load('navigation.html');
+    angular.module('dashApp',[]).controller('dashController',function($scope){
+        $scope.username = localStorage.getItem('loggedInUser');
+
+    });
     getData();
 
     function getData(){
@@ -144,6 +145,7 @@
 
 </body>
 </html>
+
 
 
 
