@@ -91,7 +91,7 @@
 </head>
 <body ng-app="">
 
-  <div id="navbar"></div>
+  <div id="navbar" ng-include='navigation.html'></div>
 
   <!-- <div ng-app="dashApp" class="navbar" ng-controller='dashController' ng-include="'navigation.html'">
     <h1>Welcome, {{username}}</h1>
@@ -117,7 +117,7 @@
   </div>
 
   <script>
-    $('#navbar').load('navigation.html');
+    //$('#navbar').load('navigation.html');
     getData();
 
     function getData(){
@@ -143,3 +143,4 @@
 
 </body>
 </html>
+
