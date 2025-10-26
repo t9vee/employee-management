@@ -91,18 +91,18 @@
 </head>
 <body ng-app="">
 
-  <div id="navbar" ng-include='navigation.html'></div>
+  <div ng-include='navigation.html'></div>
 
   <!-- <div ng-app="dashApp" class="navbar" ng-controller='dashController' ng-include="'navigation.html'">
     <h1>Welcome, {{username}}</h1>
     <button onclick="logout()">Logout</button>
   </div> -->
 
-  <div class="main">
+  <div ng-app="dashApp" ng-controller="dashController" class="main">
     <h2>Dashboard</h2>
     <div class="widgets">
       <div class="widget">
-        <h3>Widget 1</h3>
+        <h3>Welcome- {{username}}</h3>
         <p>Quick stats or summary info.</p>
       </div>
       <div class="widget">
@@ -143,4 +143,5 @@
 
 </body>
 </html>
+
 
