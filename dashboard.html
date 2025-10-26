@@ -118,23 +118,18 @@
   </div>
 
   <script>
-    $('#navbar').load('navigation.html');
-    getData();
+    
+angular.module('dashApp',[]).controller('dashController',function($scope){
+        $scope.username = localStorage.getItem('loggedInUser');
 
-    function getData(){
-      var allEmployeesData = JSON.parse(localStorage.getItem('allEmployees'))
-    }
-
+    });
 
     function logout() {
       alert("Logging out...");
       window.location.href = "index.html";
     }
 
-     angular.module('dashApp',[]).controller('dashController',function($scope){
-        $scope.username = localStorage.getItem('loggedInUser');
-
-    });
+     
 
 
 
@@ -144,4 +139,5 @@
 
 </body>
 </html>
+
 
