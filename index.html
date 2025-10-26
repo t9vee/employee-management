@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>Login/Register</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+  <script src="js/starter.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="starting-page" ng-controller="MainController">
+  <div class="login-container">
+    <div ng-show="mode === 'login'">
+      <h2>Login<span ng-show="login.username">- Hello {{login.username}}</span></h2>
+      <input type="text" ng-model="login.username" placeholder="Username" required />
+      <input type="password" ng-model="login.password" placeholder="Password" required />
+      <button ng-click="loginUser()">Login</button>
+      <a style="text-decoration: underline;cursor:pointer;" class="toggle" ng-click="mode='register'">
+      Register New User</a>
+    </div>
+
+    <div ng-show="mode === 'register'">
+      <h2>Register</h2>
+      <form name="registerForm" ng-submit="registerUser()" novalidate>
+        <input type="text" ng-model="register.name" placeholder="Full Name" required /><br>
+        <label>Gender:</label>
+        <div style="display: flex; gap: 20px; align-items: center;">
+          <label style="display: flex; align-items: center;">
+            <input type="radio" ng-model="register.gender" value="Male" required />
+            <span style="margin-left: 5px;">Male</span>
+          </label>
+          <label style="display: flex; align-items: center;">
+            <input type="radio" ng-model="register.gender" value="Female" required />
+            <span style="margin-left: 5px;">Female</span>
+          </label>
+          <label style="display: flex; align-items: center;">
+            <input type="radio" ng-model="register.gender" value="Other" required />
+            <span style="margin-left: 5px;">Other</span>
+          </label>
+        </div>
+
+
+        <br>
+        <input type="email" ng-model="register.email" placeholder="Email ID" required /><br>
+        <input type="text" ng-model="register.address" placeholder="Address" required /><br>
+  
+        <input type="text" ng-model="register.department" placeholder="Department" required /><br>
+        <input type="text" ng-model="register.username" placeholder="Username" required /><br>
+        <input type="password" ng-model="register.password" placeholder="Password" required /><br>
+        <button type="submit">Register</button>
+      </form>
+<!-- 
+      <input type="password" ng-model="register.password" placeholder="Password" required />
+      <button ng-click="registerUser()">Register</button> -->
+      <div class="toggle" ng-click="registerUser()">Back to Login</div>
+    </div>
+  </div>
+
+  <script>
+    //showLocation();
+    var apiUrl = 'https://uwqfqwzyticvasargppk.supabase.co/rest/v1/Employee-Data?select=*&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3cWZxd3p5dGljdmFzYXJncHBrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0MjQxMDcsImV4cCI6MjA3NzAwMDEwN30.zvUKlrM4BYDfoRxoumzhWPgfCX0iD_L7Br3QqcW5J8A';
+
+    var apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV3cWZxd3p5dGljdmFzYXJncHBrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0MjQxMDcsImV4cCI6MjA3NzAwMDEwN30.zvUKlrM4BYDfoRxoumzhWPgfCX0iD_L7Br3QqcW5J8A';
+
+    angular.module('myApp', [])
+    .controller('MainController', function($scope) {
+      $scope.mode = 'login';
+      $scope.users = {};
+
+      $scope.login = {};
+      $scope.register = {};
+
+      $scope.loginUser = function () {
+        const username = $scope.login.username;
+        const password = $scope.login.password;
+
+      fetch(apiUrl, {
+        headers: {
+          'apikey': apiKey
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+
+        const allEmployees = data;
+
+
+        const usersByUsername = {};
+  data.forEach(user => {
+    usersByUsername[user.username] = user;
+  });
+
+  console.log(usersByUsername);
+
+  // Now you can access like: usersByUsername['jason']
+  const enteredUsername = $scope.login.username;
+  const enteredPassword = $scope.login.password;
+
+  const matchedUser = usersByUsername[enteredUsername];
+
+  if (matchedUser && matchedUser.password === enteredPassword) {
+    alert('Login successful!');
+    $scope.currentUser = enteredUsername;
+    localStorage.setItem('loggedInUser', enteredUsername);
+    localStorage.setItem('allEmployees', JSON.stringify(allEmployees));
+    window.location.href = 'dashboard.html';
+  } else {
+    alert('Invalid credentials or user not found.');
+    $scope.register.username = enteredUsername;
+    $scope.mode = 'register';
+  }
+})
+.catch(error => {
+  console.error('Error fetching users:', error);
+});
+    };
+
+
+      // $scope.loginUser = function() {
+      //   const user = $scope.login.username;
+      //   const pass = $scope.login.password;
+      //   if ($scope.users[user] === pass) {
+      //     alert('Login successful!');
+      //     $scope.currentUser = user;
+      //     $scope.view = 'home';
+      //     localStorage.setItem('loggedInUser', user);
+      //     window.location.href ='dashboard.html';
+      //   } else {
+      //     alert('User not found. Redirecting to registration...');
+      //     $scope.register.username = user;
+      //     $scope.mode = 'register';
+      //   }
+      // };
+
+      // $scope.registerUser = function() {
+        
+      //   const user = $scope.register.username;
+      //   const pass = $scope.register.password;
+        
+      // };
+    
+
+
+    $scope.registerUser = function () {
+
+      $scope.mode ='login';
+
+      const userData = {
+          name: $scope.register.name,
+          gender: $scope.register.gender,
+          email: $scope.register.email,
+          date_of_joining: fullDate,
+          address: $scope.register.address,
+          working_from_home: true,
+          serving_notice_period: false,
+          department: $scope.register.department,
+          leave_status: "None",
+          logged_in: false,
+          latitude: 28.7041,
+          longitude: 77.1025,
+          username: $scope.register.username,
+          password: $scope.register.password // ⚠️ Consider hashing this for security
+        };
+
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': apiKey,
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('User registered:', data);
+          alert('Registration successful! You can now log in.');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Registration failed!');
+        });
+
+        // if ($scope.users[user]) {
+        //   alert('User already exists!');
+        // } else {
+        //   $scope.users[user] = pass;
+        //   alert('Registration successful! You can now log in.');
+        //   $scope.login.username = user;
+        //   $scope.mode = 'login';
+        // }
+    };
+
+
+
+});
+
+  </script>
+</body>
+</html>
