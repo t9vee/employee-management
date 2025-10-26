@@ -94,8 +94,8 @@
 
   <!-- <div ng-app="" ng-include='navigation.html'></div> -->
 
-   <div ng-app="dashApp" class="navbar" ng-controller='dashController' ng-include="'navigation.html'">
-    <h1>Welcome, {{username}}</h1>
+   <div ng-app="" class="navbar"  ng-include="'navigation.html'">
+    <h1 ng-app="dashApp" ng-controller='dashController'>Welcome, {{username}}</h1>
     <button onclick="logout()">Logout</button>
   </div> 
 
@@ -139,6 +139,7 @@ angular.module('dashApp',[]).controller('dashController',function($scope){
 
 </body>
 </html>
+
 
 
 
