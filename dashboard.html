@@ -9,9 +9,15 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/services.js"></script>
+  <!-- <script src="js/app.js"></script> -->
+  <!-- <script src="js/controllers.js"></script> -->
+  <!-- <script src="js/services.js"></script> -->
+  <script>
+    angular.module('dashApp',[]).controller('dashController',function($scope){
+        $scope.username = localStorage.getItem('loggedInUser');
+
+    });
+  </script>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -130,11 +136,6 @@
       window.location.href = "index.html";
     }
 
-     angular.module('dashApp',[]).controller('dashController',function($scope){
-        $scope.username = localStorage.getItem('loggedInUser');
-
-    });
-
 
 
     
@@ -143,6 +144,7 @@
 
 </body>
 </html>
+
 
 
 
