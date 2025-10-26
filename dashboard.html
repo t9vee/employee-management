@@ -99,11 +99,11 @@
     <button onclick="logout()">Logout</button>
   </div> -->
 
-  <div class="main">
+  <div class="main" ng-app="dashApp" ng-controller="dashController">
     <h2>Dashboard</h2>
     <div class="widgets">
       <div class="widget">
-        <h3>Widget 1</h3>
+        <h3>Welcome - {{username}}</h3>
         <p>Quick stats or summary info.</p>
       </div>
       <div class="widget">
@@ -144,3 +144,4 @@
 
 </body>
 </html>
+
