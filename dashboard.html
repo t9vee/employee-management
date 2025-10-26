@@ -92,18 +92,18 @@
 </head>
 <body>
 
-  <div ng-app="" ng-include='navigation.html'></div>
+  <!-- <div ng-app="" ng-include='navigation.html'></div> -->
 
-  <!-- <div ng-app="dashApp" class="navbar" ng-controller='dashController' ng-include="'navigation.html'">
+   <div ng-app="dashApp" class="navbar" ng-controller='dashController' ng-include="'navigation.html'">
     <h1>Welcome, {{username}}</h1>
     <button onclick="logout()">Logout</button>
-  </div> -->
+  </div> 
 
-  <div class="main" ng-app="dashApp" ng-controller="dashController">
+  <div class="main" ng-app="" ng-controller="">
     <h2>Dashboard</h2>
     <div class="widgets">
       <div class="widget">
-        <h3>Welcome - {{username}}</h3>
+        <h3>Welcome</h3>
         <p>Quick stats or summary info.</p>
       </div>
       <div class="widget">
@@ -139,6 +139,7 @@ angular.module('dashApp',[]).controller('dashController',function($scope){
 
 </body>
 </html>
+
 
 
 
