@@ -9,10 +9,10 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
-  <script src="js/app.js"></script>
+  <!-- <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
-  
+   -->
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -90,16 +90,16 @@
     }
   </style>
 </head>
-<body>
+<body ng-app="dashApp">
 
   <!-- <div ng-app="" ng-include='navigation.html'></div> -->
 
-   <div ng-app="" class="navbar"  ng-include="'navigation.html'">
+   <div class="navbar"  ng-include="'navigation.html'">
     <!-- <h1 >Welcome, {{username}}</h1> -->
     <!-- <button onclick="logout()">Logout HTML</button> -->
   </div> 
 
-  <div class="main" ng-app="dashApp" ng-controller='dashController'>
+  <div class="main"  ng-controller='dashController'>
     <h2>Dashboard</h2>
     <div class="widgets">
       <div class="widget">
@@ -169,6 +169,7 @@
 
 </body>
 </html>
+
 
 
 
