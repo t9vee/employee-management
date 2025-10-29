@@ -102,10 +102,17 @@
   <div class="main"  ng-controller='dashController'>
     <h2>Dashboard</h2>
     <div class="widgets">
-      <div class="widget">
-        <h3>Welcome {{username}}</h3>
-        <p>Quick stats or summary info.</p>
-      </div>
+      <div class="widget text-center">
+  <h3>Welcome, {{ username }}</h3>
+
+  <!-- Placeholder Image -->
+  <img src="https://via.placeholder.com/120" alt="Employee Photo" class="rounded-circle my-3" />
+
+  <!-- Status Info -->
+  <p><strong>Status:</strong> {{ loggedInStatus }}</p>
+  <p><strong>Working From:</strong> {{ workingLocation }}</p>
+</div>
+
       <div class="widget">
         <h3>Employee Status</h3>
         <div class="row text-center">
@@ -178,6 +185,7 @@
 
 </body>
 </html>
+
 
 
 
