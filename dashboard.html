@@ -115,7 +115,7 @@
 
   <!-- Status Info -->
   <p><strong>Status:</strong> {{ loggedInStatus ? 'Logged In ' : 'Logged Off' }}</p>
-  <p><strong>Working From:</strong> {{ wfh ? 'Home' : 'Office' }}</p>
+  <p><strong>Working From:</strong> {{ wfho ? 'Home' : 'Office' }}</p>
 </div>
 
       <div class="widget">
@@ -179,7 +179,7 @@
       }
         
       $scope.empname = localStorage.getItem('loggedInUser');
-      $scope.wfh = localStorage.getItem('wfh');
+      $scope.wfho = localStorage.getItem('wfh');
       $scope.loggedInStatus = localStorage.getItem('loggedinstatus');
 
       usersByUsername[user.username] = user;
@@ -194,6 +194,7 @@
 
 </body>
 </html>
+
 
 
 
