@@ -12,13 +12,7 @@
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/services.js"></script>
-  <script>
-  angular.module('dashApp',[]).controller('dashController',function($scope){
-        $scope.username = localStorage.getItem('loggedInUser');
-
-    });
-
-</script>
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -109,7 +103,7 @@
     <h2>Dashboard</h2>
     <div class="widgets">
       <div class="widget">
-        <h3>Welcome {{username}}</h3>
+        <h3>Welcome {{localStorage.getItem('loggedInUser')}}</h3>
         <p>Quick stats or summary info.</p>
       </div>
       <div class="widget">
@@ -135,23 +129,47 @@
   </div>
 
   <script>
-    
+  angular.module('dashApp', []).controller('dashController', function($scope) {
+    $scope.username = localStorage.getItem('loggedInUser');
+    $scope.usersData = JSON.parse(localStorage.allEmployees || '[]');
+    console.log($scope.usersData);
 
-    function logout() {
-      alert("Logging out...");
-      window.location.href = "index.html";
-    }
+    // Initialize counters
+    $scope.loggedInCount = 0;
+    $scope.loggedOffCount = 0;
+    $scope.workingFromHomeCount = 0;
+    $scope.notWorkingFromHomeCount = 0;
 
-     
+    // Optional: map users by username
+    const usersByUsername = {};
 
+    // Count logic
+    $scope.usersData.forEach(user => {
+      if (user.logged_in) {
+        $scope.loggedInCount++;
+      } else {
+        $scope.loggedOffCount++;
+      }
 
+      if (user.working_from_home) {
+        $scope.workingFromHomeCount++;
+      } else {
+        $scope.notWorkingFromHomeCount++;
+      }
 
-    
-    
-  </script>
+      usersByUsername[user.username] = user;
+    });
+  });
+
+  function logout() {
+    alert("Logging out...");
+    window.location.href = "index.html";
+  }
+</script>
 
 </body>
 </html>
+
 
 
 
