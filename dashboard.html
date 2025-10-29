@@ -65,7 +65,7 @@
       padding: 20px;
     }
 
-    .widgets {
+    .widgets-row {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
@@ -106,18 +106,19 @@
 
   <div class="main"  ng-controller='dashController'>
     <h2>Dashboard</h2>
-    <div class="widgets">
+    <!-- ROW 1 -->
+    <div class="widgets-row">
+      <!-- WID 1 -->
       <div class="widget text-center">
-  <h3>Welcome, {{ username }}</h3>
-
-  <!-- Placeholder Image -->
-  <img class="user-image" src="https://media.istockphoto.com/id/2060009001/vector/avatar-user-profile-person-icon-profile-picture-for-social-media-profiles-icons-screensavers.jpg?s=1024x1024&w=is&k=20&c=f8-AK6NbqIXHOCGHkZCm_5rqm8t4H7ij9Soiu1OZNdk=" alt="Employee Photo" class="rounded-circle my-3" />
-
-  <!-- Status Info -->
-  <p><strong>Status:</strong> {{ loggedInStatus ? 'Logged In ' : 'Logged Off' }}</p>
-  <p><strong>Working From:</strong> {{ wfho ? 'Home' : 'Office' }}</p>
-</div>
-
+        <h3>Welcome, {{ username }}</h3>
+        <!-- Placeholder Image -->
+        <img class="user-image" src="https://media.istockphoto.com/id/2060009001/vector/avatar-user-profile-person-icon-profile-picture-for-social-media-profiles-icons-screensavers.jpg?s=1024x1024&w=is&k=20&c=f8-AK6NbqIXHOCGHkZCm_5rqm8t4H7ij9Soiu1OZNdk=" alt="Employee Photo" class="rounded-circle my-3" />
+        <!-- Status Info -->
+        <p><strong>Status:</strong> {{ loggedInStatus ? 'Logged In ' : 'Logged Off' }}</p>
+        <p><strong>Working From:</strong> {{ wfho ? 'Home' : 'Office' }}</p>
+      </div>
+      <!-- WID 1 END -->
+      <!-- WID 2 STARTS -->
       <div class="widget">
         <h3>Employee Status</h3>
         <div class="row text-center">
@@ -131,8 +132,8 @@
           </div>
         </div>
       </div>
-
-
+      <!-- WID 2 END -->
+      <!-- WID 3 STARTS -->
       <div class="widget">
         <h3>Widget 3</h3>
         <div class="row text-center">
@@ -146,10 +147,11 @@
           </div>
         </div>
       </div>
+      <!-- WID 1 END -->
     </div>
-  </div>
-
-  <div class="row">
+    <!-- ROW 1 END -->
+    <!-- ROW 2 START -->
+    <div class="row">
       <!-- Widget 4: Leave Status -->
       <div class="col-md-4">
         <div class="widget text-center">
@@ -170,7 +172,7 @@
       </div>
     </div>
 
-    <!-- Widget 6: Bar Chart for Department Task Load -->
+     <!-- Widget 6: Bar Chart for Department Task Load -->
     <div class="row">
       <div class="col-md-12">
         <div class="widget">
@@ -182,6 +184,14 @@
       </div>
     </div>
   </div>
+
+    <!-- ROW 2 END -->
+  </div>
+
+  
+      
+
+   
 
   <script>
   angular.module('dashApp', []).controller('dashController', function($scope) {
@@ -228,6 +238,7 @@
 
 </body>
 </html>
+
 
 
 
