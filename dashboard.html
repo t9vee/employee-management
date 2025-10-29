@@ -149,6 +149,40 @@
     </div>
   </div>
 
+  <div class="row">
+      <!-- Widget 4: Leave Status -->
+      <div class="col-md-4">
+        <div class="widget text-center">
+          <h4>Leave Overview</h4>
+          <p><strong>On Leave:</strong> {{ onLeaveCount }}</p>
+          <p><strong>Available:</strong> {{ notOnLeaveCount }}</p>
+        </div>
+      </div>
+
+      <!-- Widget 5: Pie Chart for Login Status -->
+      <div class="col-md-8">
+        <div class="widget">
+          <h4 class="text-center">Login Status Distribution</h4>
+          <div class="chart-container">
+            <canvas id="loginPieChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Widget 6: Bar Chart for Department Task Load -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget">
+          <h4 class="text-center">Tasks by Department</h4>
+          <div class="chart-container">
+            <canvas id="taskBarChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
   angular.module('dashApp', []).controller('dashController', function($scope) {
     $scope.username = localStorage.getItem('loggedInUser');
@@ -194,6 +228,7 @@
 
 </body>
 </html>
+
 
 
 
