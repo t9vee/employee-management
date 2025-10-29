@@ -107,7 +107,10 @@
   if (matchedUser && matchedUser.password === enteredPassword) {
     alert('Login successful!');
     $scope.currentUser = enteredUsername;
-    localStorage.setItem('loggedInUser', enteredUsername);
+    localStorage.setItem('loggedInUser', matchedUser.name);
+    localStorage.setItem('wfh', matchedUser.working_from_home);
+    localStorage.setItem('loggedinstatus', matchedUser.logged_in);
+    
     localStorage.setItem('allEmployees', JSON.stringify(allEmployees));
     window.location.href = 'dashboard.html';
   } else {
@@ -170,7 +173,7 @@
 
         fetch(apiUrl, {
           method: 'POST',
-          headers: {
+          headers: 
             'Content-Type': 'application/json',
             'apikey': apiKey,
             'Prefer': 'return=representation'
@@ -204,3 +207,4 @@
   </script>
 </body>
 </html>
+
