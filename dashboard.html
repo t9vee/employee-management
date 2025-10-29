@@ -114,8 +114,8 @@
   <img class="user-image" src="https://media.istockphoto.com/id/2060009001/vector/avatar-user-profile-person-icon-profile-picture-for-social-media-profiles-icons-screensavers.jpg?s=1024x1024&w=is&k=20&c=f8-AK6NbqIXHOCGHkZCm_5rqm8t4H7ij9Soiu1OZNdk=" alt="Employee Photo" class="rounded-circle my-3" />
 
   <!-- Status Info -->
-  <p><strong>Status:</strong> {{ loggedInStatus }}</p>
-  <p><strong>Working From:</strong> {{ workingLocation }}</p>
+  <p><strong>Status:</strong> {{ loggedInStatus ? 'Logged In ' : 'Logged Off' }}</p>
+  <p><strong>Working From:</strong> {{ wfh ? 'Home' : 'Office' }}</p>
 </div>
 
       <div class="widget">
@@ -177,6 +177,10 @@
       } else {
         $scope.wfo++;
       }
+        
+      $scope.empname = localStorage.setItem('loggedInUser', matchedUser.name);
+      $scope.wfh = localStorage.setItem('wfh', matchedUser.working_from_home);
+      $scope.loggedInStatus = localStorage.setItem('loggedinstatus', matchedUser.logged_in);
 
       usersByUsername[user.username] = user;
     });
@@ -190,6 +194,7 @@
 
 </body>
 </html>
+
 
 
 
