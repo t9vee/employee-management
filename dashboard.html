@@ -1,158 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="dashApp">
 <head>
   <meta charset="UTF-8">
   <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap & AngularJS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
-  <!-- <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/services.js"></script>
-   -->
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
 
+  <!-- Chart.js for graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f2f5;
+      padding-top: 80px;
     }
 
-    /* Top Navigation Bar */
     .navbar {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background-color: #333;
+      background-color: #091f50;
       color: white;
       padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       z-index: 1000;
     }
 
-    .navbar h1 {
-      font-size: 20px;
-    }
-
-    .navbar button {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .navbar button:hover {
-      background-color: #d32f2f;
-    }
-
-    /* Main Content */
     .main {
-      margin-top: 70px; /* Space for fixed navbar */
       padding: 20px;
     }
 
-    .widgets-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
     .widget {
-      flex: 1;
-      min-width: 250px;
       background-color: white;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
 
-    .widget h3 {
-      margin-bottom: 10px;
+    .widget h4 {
+      margin-bottom: 15px;
       color: #333;
     }
 
-    .widget p {
-      color: #666;
+    .user-image {
+      width: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
     }
-    .user-image{
-    
-    width: 100px;
 
+    .chart-container {
+      position: relative;
+      height: 300px;
     }
   </style>
 </head>
-<body ng-app="dashApp">
+<body ng-controller="dashController">
 
-  <!-- <div ng-app="" ng-include='navigation.html'></div> -->
+  <!-- Navigation -->
+  <div class="navbar" ng-include="'navigation.html'"></div>
 
-   <div class="navbar"  ng-include="'navigation.html'">
-    <!-- <h1 >Welcome, {{username}}</h1> -->
-    <!-- <button onclick="logout()">Logout HTML</button> -->
-  </div> 
+  <!-- Main Content -->
+  <div class="main container">
+    <h2 class="mb-4">Dashboard</h2>
 
-  <div class="main"  ng-controller='dashController'>
-    <h2>Dashboard</h2>
-    <!-- ROW 1 -->
-    <div class="widgets-row">
-      <!-- WID 1 -->
-      <div class="widget text-center">
-        <h3>Welcome, {{ username }}</h3>
-        <!-- Placeholder Image -->
-        <img class="user-image" src="https://media.istockphoto.com/id/2060009001/vector/avatar-user-profile-person-icon-profile-picture-for-social-media-profiles-icons-screensavers.jpg?s=1024x1024&w=is&k=20&c=f8-AK6NbqIXHOCGHkZCm_5rqm8t4H7ij9Soiu1OZNdk=" alt="Employee Photo" class="rounded-circle my-3" />
-        <!-- Status Info -->
-        <p><strong>Status:</strong> {{ loggedInStatus ? 'Logged In ' : 'Logged Off' }}</p>
-        <p><strong>Working From:</strong> {{ wfho ? 'Home' : 'Office' }}</p>
-      </div>
-      <!-- WID 1 END -->
-      <!-- WID 2 STARTS -->
-      <div class="widget">
-        <h3>Employee Status</h3>
-        <div class="row text-center">
-          <div class="col">
-            <p><strong>Logged Off</strong></p>
-            <h4>{{loggedOffCount}}</h4>
-          </div>
-          <div class="col">
-            <p><strong>Logged In</strong></p>
-            <h4>{{loggedInCount}}</h4>
-          </div>
+    <!-- Row 1: User Info + Login Summary + WFH Summary -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="widget text-center">
+          <h4>Welcome, {{ username }}</h4>
+          <img class="user-image" src="https://via.placeholder.com/100" alt="Employee Photo">
+          <p><strong>Status:</strong> {{ loggedInStatus ? 'Logged In' : 'Logged Off' }}</p>
+          <p><strong>Working From:</strong> {{ wfho ? 'Home' : 'Office' }}</p>
         </div>
       </div>
-      <!-- WID 2 END -->
-      <!-- WID 3 STARTS -->
-      <div class="widget">
-        <h3>Widget 3</h3>
-        <div class="row text-center">
-          <div class="col">
-            <p><strong>WFH</strong></p>
-            <h4>{{wfh}}</h4>
-          </div>
-          <div class="col">
-            <p><strong>WFO</strong></p>
-            <h4>{{wfo}}</h4>
-          </div>
+
+      <div class="col-md-4">
+        <div class="widget text-center">
+          <h4>Login Summary</h4>
+          <p><strong>Logged In:</strong> {{ loggedInCount }}</p>
+          <p><strong>Logged Off:</strong> {{ loggedOffCount }}</p>
         </div>
       </div>
-      <!-- WID 1 END -->
+
+      <div class="col-md-4">
+        <div class="widget text-center">
+          <h4>Work Mode Summary</h4>
+          <p><strong>WFH:</strong> {{ wfh }}</p>
+          <p><strong>WFO:</strong> {{ wfo }}</p>
+        </div>
+      </div>
     </div>
-    <!-- ROW 1 END -->
-    <!-- ROW 2 START -->
-    <div class="row">
-      <!-- Widget 4: Leave Status -->
+
+    <!-- Row 2: Leave Status + Pie Chart -->
+    <div class="row mb-4">
       <div class="col-md-4">
         <div class="widget text-center">
           <h4>Leave Overview</h4>
@@ -161,7 +108,6 @@
         </div>
       </div>
 
-      <!-- Widget 5: Pie Chart for Login Status -->
       <div class="col-md-8">
         <div class="widget">
           <h4 class="text-center">Login Status Distribution</h4>
@@ -172,8 +118,8 @@
       </div>
     </div>
 
-     <!-- Widget 6: Bar Chart for Department Task Load -->
-    <div class="row">
+    <!-- Row 3: Bar Chart -->
+    <div class="row mb-4">
       <div class="col-md-12">
         <div class="widget">
           <h4 class="text-center">Tasks by Department</h4>
@@ -185,79 +131,70 @@
     </div>
   </div>
 
-    <!-- ROW 2 END -->
-  </div>
-
-  
-      
-
-   
-
+  <!-- AngularJS Controller -->
   <script>
-  angular.module('dashApp', []).controller('dashController', function($scope) {
-    $scope.username = localStorage.getItem('loggedInUser');
-    $scope.usersData = JSON.parse(localStorage.allEmployees || '[]');
-    console.log($scope.usersData);
+    angular.module('dashApp', []).controller('dashController', function($scope) {
+      $scope.username = localStorage.getItem('loggedInUser');
+      $scope.usersData = JSON.parse(localStorage.allEmployees || '[]');
 
-    // Initialize counters
-    $scope.loggedInCount = 0;
-    $scope.loggedOffCount = 0;
-    $scope.wfh = 0;
-    $scope.wfo = 0;
+      $scope.loggedInCount = 0;
+      $scope.loggedOffCount = 0;
+      $scope.wfh = 0;
+      $scope.wfo = 0;
+      $scope.onLeaveCount = 0;
+      $scope.notOnLeaveCount = 0;
 
-    // Optional: map users by username
-    const usersByUsername = {};
+      $scope.loggedInStatus = localStorage.getItem('loggedinstatus') === 'true';
+      $scope.wfho = localStorage.getItem('wfh') === 'true';
 
-    // Count logic
-    $scope.usersData.forEach(user => {
-      if (user.logged_in) {
-        $scope.loggedInCount++;
-      } else {
-        $scope.loggedOffCount++;
-      }
+      $scope.usersData.forEach(user => {
+        if (user.logged_in) $scope.loggedInCount++;
+        else $scope.loggedOffCount++;
 
-      if (user.working_from_home) {
-        $scope.wfh++;
-      } else {
-        $scope.wfo++;
-      }
-        
-      $scope.empname = localStorage.getItem('loggedInUser');
-      $scope.wfho = localStorage.getItem('wfh');
-      $scope.loggedInStatus = localStorage.getItem('loggedinstatus');
+        if (user.working_from_home) $scope.wfh++;
+        else $scope.wfo++;
 
-      usersByUsername[user.username] = user;
+        if (user.leave_status && user.leave_status !== 'None') $scope.onLeaveCount++;
+        else $scope.notOnLeaveCount++;
+      });
+
+      // Chart.js Pie Chart
+      setTimeout(() => {
+        new Chart(document.getElementById('loginPieChart'), {
+          type: 'pie',
+          data: {
+            labels: ['Logged In', 'Logged Off'],
+            datasets: [{
+              data: [$scope.loggedInCount, $scope.loggedOffCount],
+              backgroundColor: ['#28a745', '#dc3545']
+            }]
+          }
+        });
+
+        // Bar Chart Example (static departments)
+        new Chart(document.getElementById('taskBarChart'), {
+          type: 'bar',
+          data: {
+            labels: ['HR', 'IT', 'Finance'],
+            datasets: [{
+              label: 'Tasks Assigned',
+              data: [5, 8, 3], // Replace with real task data
+              backgroundColor: '#007bff'
+            }]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
+      }, 100);
     });
-  });
 
-  function logout() {
-    alert("Logging out...");
-    window.location.href = "index.html";
-  }
-</script>
-
+    function logout() {
+      alert("Logging out...");
+      window.location.href = "index.html";
+    }
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
