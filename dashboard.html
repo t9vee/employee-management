@@ -123,7 +123,16 @@
 
       <div class="widget">
         <h3>Widget 3</h3>
-        <p>Links or shortcuts to features.</p>
+        <div class="row text-center">
+          <div class="col">
+            <p><strong>WFH</strong></p>
+            <h4>{{wfh}}</h4>
+          </div>
+          <div class="col">
+            <p><strong>WFO</strong></p>
+            <h4>{{wfo}}</h4>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -137,8 +146,8 @@
     // Initialize counters
     $scope.loggedInCount = 0;
     $scope.loggedOffCount = 0;
-    $scope.workingFromHomeCount = 0;
-    $scope.notWorkingFromHomeCount = 0;
+    $scope.wfh = 0;
+    $scope.wfo = 0;
 
     // Optional: map users by username
     const usersByUsername = {};
@@ -152,9 +161,9 @@
       }
 
       if (user.working_from_home) {
-        $scope.workingFromHomeCount++;
+        $scope.wfh++;
       } else {
-        $scope.notWorkingFromHomeCount++;
+        $scope.wfo++;
       }
 
       usersByUsername[user.username] = user;
@@ -169,6 +178,7 @@
 
 </body>
 </html>
+
 
 
 
