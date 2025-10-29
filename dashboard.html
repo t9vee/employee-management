@@ -88,6 +88,11 @@
     .widget p {
       color: #666;
     }
+    .user-image{
+    
+    width: 100px;
+
+    }
   </style>
 </head>
 <body ng-app="dashApp">
@@ -106,7 +111,7 @@
   <h3>Welcome, {{ username }}</h3>
 
   <!-- Placeholder Image -->
-  <img src="https://media.istockphoto.com/id/2060009001/vector/avatar-user-profile-person-icon-profile-picture-for-social-media-profiles-icons-screensavers.jpg?s=1024x1024&w=is&k=20&c=f8-AK6NbqIXHOCGHkZCm_5rqm8t4H7ij9Soiu1OZNdk=" alt="Employee Photo" class="rounded-circle my-3" />
+  <img class="user-image" src="https://media.istockphoto.com/id/2060009001/vector/avatar-user-profile-person-icon-profile-picture-for-social-media-profiles-icons-screensavers.jpg?s=1024x1024&w=is&k=20&c=f8-AK6NbqIXHOCGHkZCm_5rqm8t4H7ij9Soiu1OZNdk=" alt="Employee Photo" class="rounded-circle my-3" />
 
   <!-- Status Info -->
   <p><strong>Status:</strong> {{ loggedInStatus }}</p>
@@ -185,6 +190,7 @@
 
 </body>
 </html>
+
 
 
 
