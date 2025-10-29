@@ -178,9 +178,9 @@
         $scope.wfo++;
       }
         
-      $scope.empname = localStorage.setItem('loggedInUser', matchedUser.name);
-      $scope.wfh = localStorage.setItem('wfh', matchedUser.working_from_home);
-      $scope.loggedInStatus = localStorage.setItem('loggedinstatus', matchedUser.logged_in);
+      $scope.empname = localStorage.getItem('loggedInUser');
+      $scope.wfh = localStorage.getItem('wfh');
+      $scope.loggedInStatus = localStorage.getItem('loggedinstatus');
 
       usersByUsername[user.username] = user;
     });
@@ -194,6 +194,7 @@
 
 </body>
 </html>
+
 
 
 
