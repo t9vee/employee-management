@@ -1,6 +1,6 @@
 
 <!-- navigation.html -->
-<nav class="navbar navbar-expand-lg" style="background-color: #091f50;">
+<!--<nav class="navbar navbar-expand-lg" style="background-color: #091f50;">
   <a class="navbar-brand text-white font-weight-bold" href="#" style="color: #4a6ec6;">Employee Portal</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,41 @@
     </ul>
     <button class="btn btn-sm" style="background-color: red; color: #ffffff;" onclick="logout()">Logout</button>
   </div>
-</nav>
+</nav> -->
 
+<!-- navigation.html -->
+<nav class="navbar navbar-expand-lg" style="background-color: #091f50;">
+  <a class="navbar-brand text-white font-weight-bold" href="#" style="color: #4a6ec6;">Employee Portal</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link text-white" href="dashboard.html">Dashboard</a>
+      </li>
+
+      <!-- Dropdown for Apply Leave -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="leaveDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Apply Leave
+        </a>
+        <div class="dropdown-menu" aria-labelledby="leaveDropdown">
+          <a class="dropdown-item" href="apply-leave.html">Apply Leave</a>
+          <a class="dropdown-item" href="see-leaves.html">See Leaves</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="salary-slips.html">Salary Slips</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" href="tasks.html">Tasks</a>
+      </li>
+    </ul>
+    <button class="btn btn-sm" style="background-color: red; color: #ffffff;" onclick="logout()">Logout</button>
+  </div>
+</nav>
 
