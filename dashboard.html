@@ -10,8 +10,6 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-
-  <!-- Chart.js for graphs -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -33,7 +31,7 @@
     }
 
     .main {
-      padding: 20px;
+      padding: 20px 15px;
     }
 
     .widget {
@@ -67,11 +65,11 @@
   <div class="navbar" ng-include="'navigation.html'"></div>
 
   <!-- Main Content -->
-  <div class="main container">
+  <div class="main container-fluid">
     <h2 class="mb-4">Dashboard</h2>
 
-    <!-- Row 1: User Info + Login Summary + WFH Summary -->
-    <div class="row mb-4">
+    <!-- Row 1 -->
+    <div class="row mb-3">
       <div class="col-md-4">
         <div class="widget text-center">
           <h4>Welcome, {{ username }}</h4>
@@ -98,8 +96,8 @@
       </div>
     </div>
 
-    <!-- Row 2: Leave Status + Pie Chart -->
-    <div class="row mb-4">
+    <!-- Row 2 -->
+    <div class="row mb-3">
       <div class="col-md-4">
         <div class="widget text-center">
           <h4>Leave Overview</h4>
@@ -118,8 +116,8 @@
       </div>
     </div>
 
-    <!-- Row 3: Bar Chart -->
-    <div class="row mb-4">
+    <!-- Row 3 -->
+    <div class="row mb-3">
       <div class="col-md-12">
         <div class="widget">
           <h4 class="text-center">Tasks by Department</h4>
@@ -158,7 +156,7 @@
         else $scope.notOnLeaveCount++;
       });
 
-      // Chart.js Pie Chart
+      // Chart.js rendering
       setTimeout(() => {
         new Chart(document.getElementById('loginPieChart'), {
           type: 'pie',
@@ -171,14 +169,13 @@
           }
         });
 
-        // Bar Chart Example (static departments)
         new Chart(document.getElementById('taskBarChart'), {
           type: 'bar',
           data: {
             labels: ['HR', 'IT', 'Finance'],
             datasets: [{
               label: 'Tasks Assigned',
-              data: [5, 8, 3], // Replace with real task data
+              data: [5, 8, 3],
               backgroundColor: '#007bff'
             }]
           },
