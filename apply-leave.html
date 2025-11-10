@@ -24,11 +24,22 @@
       padding: 20px;
     }
     .widget {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px; /* space below each widget */
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.col-md-6 {
+  padding: 15px; /* adds space between columns */
+}
+
     .leaves-btn {
       
       bottom: 20px;
@@ -82,7 +93,10 @@
   </div>
     <div class="row">
       <!-- Leave Form -->
-      <div class="col-md-6 widget">
+<div class="row">
+  <div class="col-md-6">
+    <div class="widget">
+      
         <h4>Leave Application</h4>
         <form ng-submit="applyLeave()">
           <div class="form-group">
@@ -106,14 +120,24 @@
           </div>
           <button type="submit" class="btn btn-primary">Apply</button>
         </form>
-      </div>
-
+      
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="widget">
       <!-- Leave Summary -->
       <div class="col-md-6 widget">
         <h4>Leave Summary</h4>
         <canvas id="leaveChart" width="400" height="400"></canvas>
       </div>
     </div>
+    </div>
+  </div>
+</div>
+      
+      
+
+      
   </div>
 
 
