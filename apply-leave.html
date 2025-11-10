@@ -45,6 +45,28 @@
   <!-- Main Content -->
   <div class="main container">
     <h2>Apply Leave</h2>
+     <!-- Leaves Button -->
+  <button class="leaves-btn" data-toggle="modal" data-target="#holidayModal">📅</button>
+
+  <!-- Holiday List Modal -->
+  <div class="modal fade" id="holidayModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Holiday List</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li>Jan 26 - Republic Day</li>
+            <li>Aug 15 - Independence Day</li>
+            <li>Oct 2 - Gandhi Jayanti</li>
+            <!-- Add more holidays -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
     <div class="row">
       <!-- Leave Form -->
       <div class="col-md-6 widget">
@@ -81,28 +103,6 @@
     </div>
   </div>
 
-  <!-- Leaves Button -->
-  <button class="leaves-btn" data-toggle="modal" data-target="#holidayModal">📅</button>
-
-  <!-- Holiday List Modal -->
-  <div class="modal fade" id="holidayModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Holiday List</h5>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <ul>
-            <li>Jan 26 - Republic Day</li>
-            <li>Aug 15 - Independence Day</li>
-            <li>Oct 2 - Gandhi Jayanti</li>
-            <!-- Add more holidays -->
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Scripts -->
   <script>
