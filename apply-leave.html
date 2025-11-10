@@ -1,167 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" ng-app="applyLeaveApp">
 <head>
   <meta charset="UTF-8">
   <title>Apply Leave</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://ajax.googleapis.com/ajax/libs8.2/angular.min.js"</script>
-  <script src="https://ajax.googleapis.comgularjs/1.8.2/angular-route.min.js"</script>
-  <link rel="stylesheet" src="css/style.css">
-
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.minjax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min  <script src="https://cdn.jsdelivr.net/npmript>
   <style>
     body {
       font-family: Arial, sans-serif;
       background-color: #f0f2f5;
-      padding-top: 80px;
+      margin-top: 70px;
     }
-
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #091f50;
-      color: white;
-      padding: 15px 20px;
-      z-index: 1000;
-    }
-
     .main {
-      padding: 20px 15px;
+      padding: 20px;
     }
-
     .widget {
       background-color: white;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
     }
-
-    .widget h4 {
-      margin-bottom: 15px;
-      color: #333;
-    }
-
-    .user-image {
-      width: 100px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-
-    .chart-container {
-      position: relative;
-      height: 300px;
+    .leaves-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+     50%;
+      font-size: 18px;
+      cursor: pointer;
     }
   </style>
 </head>
+<body ng-controller="LeaveController">
 
-<body ng-app="myApp" class="starting-page" ng-controller="MainController">
+  <!-- Navigation -->
   <div ng-include="'navigation.html'"></div>
-  <div class="login-container">
-    <!-- Login Section -->
-    <div ng-show="mode === 'login'">
-      <h2>Login <span ng-show="login.username">- Hello {{login.username}}</span></h2>
-      <input type="text" ng-model="login.username" placeholder="Username" required />
-      <input type="password" ng-model="login.password" placeholder="Password" required />
-      <button ng-click="loginUser()">Login</button>
-      <div class="toggle" ng-click="mode='register'">Register New User</div>
-    </div>
 
-    <!-- Register Section -->
-    <div ng-show="mode === 'register'">
-      <h2>Register</h2>
-      <form name="registerForm" ng-submit="registerUser()" novalidate>
-        <input type="text" ng-model="register.name" placeholder="Full Name" required /><br>
-        
-        <label>Gender:</label>
-        <div class="gender-options">
-          <label><input type="radio" ng-model="register.gender" value="Male" required /> Male</label>
-          <label><input type="radio" ng-model="register.gender" value="Female" required /> Female</label>
-          <label><input type="radio" ng-model="register.gender" value="Other" required /> Other</label>
-        </div>
+  <!-- Main Content -->
+  <div class="main container">
+    <h2>Apply Leave</h2>
+    <div class="row">
+      <!-- Leave Form -->
+      <div class="col-md-6 widget">
+        <h4>Leave Application</h4>
+        <form ng-submit="applyLeave()">
+          <div class="form-group">
+            <label>Leave Type</label>
+            <select class="form-control" ng-model="leave.type" required>
+              <option value="PL">Privilege Leave</option>
+              <option value="SL">Sick Leave</option>
+              <option value="CL">Casual Leave</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" class="form-control" ng-model="leave.startDate" required>
+          </div>
+          <div class="form-group">
+            <label>End Date</label>
+            <input type="date" class="form-control" ng-model="leave.endDate" required>
+          </div>
+          <div class="form-group">
+            <label>Reason</label>
+            <textarea class="form-control" ng-model="leave.reason" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+      </div>
 
-        <input type="email" ng-model="register.email" placeholder="Email ID" required /><br>
-        <input type="text" ng-model="register.address" placeholder="Address" required /><br>
-        <input type="text" ng-model="register.department" placeholder="Department" required /><br>
-        <input type="text" ng-model="register.username" placeholder="Username" required /><br>
-        <input type="password" ng-model="register.password" placeholder="Password" required /><br>
-        <button type="submit">Register</button>
-      </form>
-      <div class="toggle" ng-click="mode='login'">Back to Login</div>
+      <!-- Leave Summary -->
+      <div class="col-md-6 widget">
+        <h4>Leave Summary</h4>
+        <canvas id="leaveChart" width="400" height="400"></canvas>
+      </div>
     </div>
   </div>
 
+  <!-- Leaves Button -->
+  <button class="leaves-btn" data-toggle="modal" data-target="#holidayModal">📅</button>
+
+  <!-- Holiday List Modal -->
+  <div class="modal fade" id="holidayModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Holiday List</h5>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li>Jan 26 - Republic Day</li>
+            <li>Aug 15 - Independence Day</li>
+            <li>Oct 2 - Gandhi Jayanti</li>
+            <!-- Add more holidays -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script>
-    var apiUrl = 'https://YOUR-SUPABASE-URL/rest/v1/Employee-Data?select=*';
-    var apiKey = 'YOUR-SUPABASE-API-KEY';
+    var app = angular.module('applyLeaveApp', []);
+    app.controller('LeaveController', function($scope) {
+      $scope.leave = {};
+      $scope.appliedLeaves = 5; // Example data
+      $scope.remainingLeaves = 15;
 
-    angular.module('myApp', [])
-    .controller('MainController', function($scope) {
-      $scope.mode = 'login';
-      $scope.login = {};
-      $scope.register = {};
-
-      // Login Function
-      $scope.loginUser = function() {
-        fetch(apiUrl, { headers: { 'apikey': apiKey } })
-        .then(response => response.json())
-        .then(data => {
-          const usersByUsername = {};
-          data.forEach(user => { usersByUsername[user.username] = user; });
-
-          const enteredUsername = $scope.login.username;
-          const enteredPassword = $scope.login.password;
-          const matchedUser = usersByUsername[enteredUsername];
-
-          if (matchedUser && matchedUser.password === enteredPassword) {
-            alert('Login successful!');
-            localStorage.setItem('loggedInUser', matchedUser.name);
-            window.location.href = 'dashboard.html';
-          } else {
-            alert('Invalid credentials or user not found.');
-            $scope.register.username = enteredUsername;
-            $scope.mode = 'register';
-            $scope.$apply();
-          }
-        })
-        .catch(error => console.error('Error fetching users:', error));
+      $scope.applyLeave = function() {
+        alert('Leave Applied Successfully!');
+        // Later: Save to database
       };
 
-      // Register Function
-      $scope.registerUser = function() {
-        $scope.mode = 'login';
-        const userData = {
-          name: $scope.register.name,
-          gender: $scope.register.gender,
-          email: $scope.register.email,
-          address: $scope.register.address,
-          department: $scope.register.department,
-          username: $scope.register.username,
-          password: $scope.register.password,
-          working_from_home: true,
-          logged_in: false
-        };
-
-        fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': apiKey,
-            'Prefer': 'return=representation'
-          },
-          body: JSON.stringify(userData)
-        })
-        .then(response => response.json())
-        .then(data => {
-          alert('Registration successful! You can now log in.');
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Registration failed!');
-        });
-      };
+      // Chart.js Pie Chart
+      var ctx = document.getElementById('leaveChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Applied Leaves', 'Remaining Leaves'],
+          datasets: [{
+            data: [$scope.appliedLeaves, $scope.remainingLeaves],
+            backgroundColor: ['#007bff', '#28a745']
+          }]
+        }
+      });
     });
   </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/jsndle.min.js</script>
 </body>
 </html>
