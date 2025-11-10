@@ -1,46 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="myApp">
 <head>
   <meta charset="UTF-8">
-  <title>Apply Leave</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/services.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      margin-top: 70px;
-    }
-    .main {
-      padding: 20px;
-    }
-    .widget {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-  </style>
-</head>
-<body ng-app="applyLeaveApp">
+  <title>Login/Register</title>
+  <script src="https://ajax.googleapis.com/ajax/libs8.2/angular.min.js</script>
+  <script src="https://ajax.googleapis.comgularjs/1.8.2/angular-route.min.js</script>
+  <link rel="stylesheet
 
-  <!-- Navigation -->
+<body class="starting-page" ng-controller="MainController">
   <div ng-include="'navigation.html'"></div>
+  <div class="login-container">
+    <!-- Login Section -->
+    <div ng-show="mode === 'login'">
+      <h2>Login <span ng-show="login.username">- Hello {{login.username}}</span></h2>
+      <input type="text" ng-model="login.username" placeholder="Username" required />
+      <input type="password" ng-model="login.password" placeholder="Password" required />
+      <button ng-click="loginUser()">Login</button>
+      <div class="toggle" ng-click="mode='register'">Register New User</div>
+    </div>
 
-  <!-- Main Content -->
-  <div class="main" >
-    <h2>Apply Leave</h2>
-    <div class="widget">
-      <p>This is the Apply Leave page. You can add your form or logic here.</p>
+    <!-- Register Section -->
+    <div ng-show="mode === 'register'">
+      <h2>Register</h2>
+      <form name="registerForm" ng-submit="registerUser()" novalidate>
+        <input type="text" ng-model="register.name" placeholder="Full Name" required /><br>
+        
+        <label>Gender:</label>
+        <div class="gender-options">
+          <label><input type="radio" ng-model="register.gender" value="Male" required /> Male</label>
+          <label><input type="radio" ng-model="register.gender" value="Female" required /> Female</label>
+          <label><input type="radio" ng-model="register.gender" value="Other" required /> Other</label>
+        </div>
+
+        <input type="email" ng-model="register.email" placeholder="Email ID" required /><br>
+        <input type="text" ng-model="register.address" placeholder="Address" required /><br>
+        <input type="text" ng-model="register.department" placeholder="Department" required /><br>
+        <input type="text" ng-model="register.username" placeholder="Username" required /><br>
+        <input type="password" ng-model="register.password" placeholder="Password" required /><br>
+        <button type="submit">Register</button>
+      </form>
+      <div class="toggle" ng-click="mode='login'">Back to Login</div>
     </div>
   </div>
 
   <script>
-    var app = angular.module('applyLeaveApp', []);
-  </script>
+    var apiUrl = 'https://YOUR-SUPABASE-URL/rest/v1/Employee-Data?select=*';
+    var apiKey = 'YOUR-SUPABASE-API-KEY';
 
+    angular.module('myApp', [])
+    .controller('MainController', function($scope) {
+      $scope.mode = 'login';
+      $scope.login = {};
+      $scope.register = {};
+
+      // Login Function
+      $scope.loginUser = function() {
+        fetch(apiUrl, { headers: { 'apikey': apiKey } })
+        .then(response => response.json())
+        .then(data => {
+          const usersByUsername = {};
+          data.forEach(user => { usersByUsername[user.username] = user; });
+
+          const enteredUsername = $scope.login.username;
+          const enteredPassword = $scope.login.password;
+          const matchedUser = usersByUsername[enteredUsername];
+
+          if (matchedUser && matchedUser.password === enteredPassword) {
+            alert('Login successful!');
+            localStorage.setItem('loggedInUser', matchedUser.name);
+            window.location.href = 'dashboard.html';
+          } else {
+            alert('Invalid credentials or user not found.');
+            $scope.register.username = enteredUsername;
+            $scope.mode = 'register';
+            $scope.$apply();
+          }
+        })
+        .catch(error => console.error('Error fetching users:', error));
+      };
+
+      // Register Function
+      $scope.registerUser = function() {
+        $scope.mode = 'login';
+        const userData = {
+          name: $scope.register.name,
+          gender: $scope.register.gender,
+          email: $scope.register.email,
+          address: $scope.register.address,
+          department: $scope.register.department,
+          username: $scope.register.username,
+          password: $scope.register.password,
+          working_from_home: true,
+          logged_in: false
+        };
+
+        fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': apiKey,
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert('Registration successful! You can now log in.');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Registration failed!');
+        });
+      };
+    });
+  </script>
 </body>
 </html>
