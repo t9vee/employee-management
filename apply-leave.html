@@ -35,6 +35,10 @@
       font-size: 18px;
       cursor: pointer;
     }
+    .btn-sm {
+  font-size: 14px;
+  padding: 6px 12px;
+}
   </style>
 </head>
 <body ng-controller="LeaveController">
@@ -43,10 +47,14 @@
   <div ng-include="'navigation.html'"></div>
 
   <!-- Main Content -->
-  <div class="main container">
-    <h2>Apply Leave</h2>
-     <!-- Leaves Button -->
-  <button class="leaves-btn" data-toggle="modal" data-target="#holidayModal">📅</button>
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="mb-0">Apply Leave</h2>
+  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#holidayModal">
+    📅 Leaves
+  </button>
+</div>
+  
 
   <!-- Holiday List Modal -->
   <div class="modal fade" id="holidayModal" tabindex="-1" role="dialog">
