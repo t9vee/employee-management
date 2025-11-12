@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Tasks</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-  <!-- <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/services.js"></script> -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -23,6 +21,28 @@
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+    .modal {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -20%);
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      z-index: 1000;
+      width: 300px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .modal-content {
+      position: relative;
+    }
+    .close {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body ng-app="tasksApp" ng-controller="tasksController">
@@ -31,45 +51,60 @@
   <div ng-include="'navigation.html'"></div>
 
   <div class="main">
-  <h2>Employee Tasks</h2>
-  <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Employee Name</th>
-            <th>Tasks Assigned</th>
-            <th>WF Status</th>
-            <th>Login Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="user in usersData">
-            <td>{{ user.name }}</td>
-            <td>
-              <ul>
-                <li ng-repeat="task in user.tasks">{{ task }}</li>
-              </ul>
-            </td>
-            <td>{{ user.working_from_home ? 'WFH' : 'WFO' }}</td>
-            <td>{{ user.logged_in ? 'Logged In' : 'Logged Off' }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <h2>Employee Tasks</h2>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Tasks Assigned</th>
+          <th>WF Status</th>
+          <th>Login Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in usersData">
+          <td>
+            {{ user.name }}
+            <i class="fa fa-info-circle"
+               style="transform: rotate(-20deg); margin-left: 8px; cursor: pointer;"
+               ng-click="openModal(user)">
+            </i>
+          </td>
+          <td>
+            <ul>
+              <li ng-repeat="task in user.tasks">{{ task }}</li>
+            </ul>
+          </td>
+          <td>{{ user.working_from_home ? 'WFH' : 'WFO' }}</td>
+          <td>{{ user.logged_in ? 'Logged In' : 'Logged Off' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-</div>
+  <!-- Modal -->
+  <div class="modal" ng-show="selectedEmployee">
+    <div class="modal-content">
+      <span class="close" ng-click="closeModal()">&times;</span>
+      <h3>Employee Details</h3>
+      <pre>{{ selectedEmployee | json }}</pre>
+    </div>
+  </div>
 
-<!-- AngularJS Controller -->
+  <!-- AngularJS Controller -->
   <script>
-    angular.module('tasksApp', []).controller('tasksController', function($scope, $http) {
-      // Fetch from API or localStorage
-      // Example using localStorage (like your dashboard)
+    angular.module('tasksApp', []).controller('tasksController', function($scope) {
       $scope.usersData = JSON.parse(localStorage.allEmployees || '[]');
 
-      // If you want to use API:
-      /*
-      $http.get('https://your-api-endpoint.com/tasks').then(function(response) {
-        $scope.usersData = response.data;
-      });
-      */
+      $scope.selectedEmployee = null;
+
+      $scope.openModal = function(user) {
+        $scope.selectedEmployee = user;
+      };
+
+      $scope.closeModal = function() {
+        $scope.selectedEmployee = null;
+      };
     });
   </script>
 
