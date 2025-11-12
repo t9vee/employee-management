@@ -82,14 +82,33 @@
     </table>
   </div>
 
-  <!-- Modal -->
-  <div class="modal" ng-show="selectedEmployee">
+  <!-- Modal (Bootstrap style) -->
+<div class="modal fade show" tabindex="-1" role="dialog" ng-if="selectedEmployee" style="display: block; background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <span class="close" ng-click="closeModal()">&times;</span>
-      <h3>Employee Details</h3>
-      <pre>{{ selectedEmployee | json }}</pre>
+      <div class="modal-header">
+        <h5 class="modal-title">Employee Details</h5>
+        <button type="button" class="close" ng-click="closeModal()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item"><strong>Name:</strong> {{ selectedEmployee.name }}</li>
+          <li class="list-group-item"><strong>Email:</strong> {{ selectedEmployee.email }}</li>
+          <li class="list-group-item"><strong>Department:</strong> {{ selectedEmployee.department }}</li>
+          <li class="list-group-item"><strong>Address:</strong> {{ selectedEmployee.address }}</li>
+          <li class="list-group-item"><strong>WFH:</strong> {{ selectedEmployee.working_from_home ? 'Yes' : 'No' }}</li>
+          <li class="list-group-item"><strong>Logged In:</strong> {{ selectedEmployee.logged_in ? 'Yes' : 'No' }}</li>
+          <!-- Add more fields as needed -->
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" ng-click="closeModal()">Close</button>
+      </div>
     </div>
   </div>
+</div>
 
   <!-- AngularJS Controller -->
   <script>
