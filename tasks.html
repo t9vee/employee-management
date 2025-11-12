@@ -25,36 +25,53 @@
     }
   </style>
 </head>
-<body ng-app="">
+<body ng-app="" ng-controller="tasksController">
 
   <!-- Navigation -->
   <div ng-include="'navigation.html'"></div>
 
   <div class="main">
   <h2>Employee Tasks</h2>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Employee Name</th>
-        <th>Tasks Assigned</th>
-        <th>WF Status</th>
-        <th>Login Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let task of tasksData">
-        <td>{{ task.employeeName }}</td>
-        <td>
-          <ul>
-            <li *ngFor="let t of task.tasks">{{ t }}</li>
-          </ul>
-        </td>
-        <td>{{ task.wfStatus }}</td>
-        <td>{{ task.loginStatus }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Employee Name</th>
+            <th>Tasks Assigned</th>
+            <th>WF Status</th>
+            <th>Login Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="user in usersData">
+            <td>{{ user.name }}</td>
+            <td>
+              <ul>
+                <li ng-repeat="task in user.tasks">{{ task }}</li>
+              </ul>
+            </td>
+            <td>{{ user.working_from_home ? 'WFH' : 'WFO' }}</td>
+            <td>{{ user.logged_in ? 'Logged In' : 'Logged Off' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
 </div>
+
+<!-- AngularJS Controller -->
+  <script>
+    angular.module('tasksApp', []).controller('tasksController', function($scope, $http) {
+      // Fetch from API or localStorage
+      // Example using localStorage (like your dashboard)
+      $scope.usersData = JSON.parse(localStorage.allEmployees || '[]');
+
+      // If you want to use API:
+      /*
+      $http.get('https://your-api-endpoint.com/tasks').then(function(response) {
+        $scope.usersData = response.data;
+      });
+      */
+    });
+  </script>
 
 </body>
 </html>
