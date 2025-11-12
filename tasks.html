@@ -38,5 +38,31 @@
     </div>
   </div>
 
+  <div class="tasks-container">
+  <h2>Employee Tasks</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Employee Name</th>
+        <th>Tasks Assigned</th>
+        <th>WF Status</th>
+        <th>Login Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasksData">
+        <td>{{ task.employeeName }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let t of task.tasks">{{ t }}</li>
+          </ul>
+        </td>
+        <td>{{ task.wfStatus }}</td>
+        <td>{{ task.loginStatus }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 </body>
 </html>
